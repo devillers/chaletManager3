@@ -86,7 +86,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-6">
               <Mountain
-                className="h-20 w-20 text-amber-700"
+                className="h-12 w-12 text-amber-700"
                 aria-hidden="true"
               />
               <span className={`${pacifico.className} text-xl text-neutral-100`}>
@@ -94,17 +94,17 @@ export default function Footer() {
               </span>
             </div>
             {brand.description && (
-              <p className="text-neutral-500 leading-relaxed mb-6">
+              <p className="text-neutral-500 leading-relaxed mb-6 uppercase text-xs font-light">
                 {brand.description}
               </p>
             )}
             <div className="space-y-3 text-neutral-400">
               {contact.email && (
                 <div className="flex items-center space-x-3">
-                  <FiMail className="text-amber-700 shrink-0" />
+                  <FiMail className="text-amber-700 shrink-0 text-xs font-thin " />
                   <a
                     href={`mailto:${contact.email}`}
-                    className="hover:text-white transition"
+                    className="hover:text-white transition text-xs font-thin"
                   >
                     {contact.email}
                   </a>
@@ -115,7 +115,7 @@ export default function Footer() {
                   <FiPhone className="text-amber-700" />
                   <a
                     href={`tel:${contact.phone}`}
-                    className="hover:text-white transition"
+                    className="hover:text-white transition text-xs font-thin"
                   >
                     {contact.phone}
                   </a>
@@ -126,7 +126,7 @@ export default function Footer() {
                   <FiMapPin className="text-amber-700 mt-1" />
                   <span>
                     {contact.locationLines.map((line, i) => (
-                      <span key={i}>
+                      <span key={i} className="hover:text-white transition text-xs font-thin">
                         {line}
                         {i !== contact.locationLines.length - 1 && <br />}
                       </span>
@@ -242,19 +242,6 @@ export default function Footer() {
                 </Link>
               ))}
 
-              {bottomLinks.length === 0 && (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-[11px] text-amber-700 uppercase hover:text-white transition-colors duration-200  ${
-                    item.href === adminLink.href
-                      ? "text-amber-700"
-                      : "text-neutral-500"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              )}
             </div>
           </div>
         </div>
