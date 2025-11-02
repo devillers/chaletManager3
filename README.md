@@ -1,148 +1,124 @@
 # Chalet Manager
 
-**Chalet Manager** is a full-stack web application built with the latest Next.js App Router. It is designed to help chalet owners manage their rental properties and allows tenants and admins to interact through dedicated dashboards. The app features a public-facing website (vitrine) for showcasing chalet listings (with dynamic pages for each chalet), user authentication with role-based access (Tenant, Owner, Admin), and various modern web capabilities like an installable PWA and multi-language support (French/English).
+Chalet Manager is a bilingual Next.js platform for managing luxury chalet rentals. It combines a marketing site, role-based dashboards for tenants, owners and administrators, media management powered by Cloudinary and a prepared Stripe Checkout integration. The stack follows the original project brief: App Router, JavaScript only, Tailwind CSS, Mongoose, NextAuth, Cloudinary and Stripe.
+
+## Key Features
+
+- **Bilingual public site** – French and English locales for home, services, FAQ, contact, legal, sign in and sign up pages.
+- **Role-aware dashboards** – Separate experiences for tenants, owners and admins protected by middleware and JWT sessions.
+- **NextAuth credentials flow** – Credential-based login backed by MongoDB with hashed passwords and role propagation inside the session.
+- **Owner onboarding** – Owners can update their profile, build a chalet listing, upload media to Cloudinary (with local fallback) and accept the partnership contract before review.
+- **Tenant requests** – Tenants create, view and delete stay requests stored in MongoDB collections.
+- **Admin control centre** – Super admins review chalet submissions, adjust publication status and browse all accounts and rental requests.
+- **Dynamic chalet pages** – Published chalets receive SEO-friendly pages exposed via slugs suitable for Google Business listings.
+- **Stripe-ready** – Checkout session endpoint implemented with the official Stripe SDK to enable payments once keys are provided.
+- **PWA tooling** – Manifest, service worker registration and an install prompt for owner/admin dashboards.
 
 ## Tech Stack
 
-* **Next.js (App Router)** – Full-stack React framework for server-side rendering, routing, and API routes.
-* **Tailwind CSS** – Utility-first CSS framework for responsive UI design.
-* **Framer Motion** – Animation library for React to build interactive UI transitions.
-* **MongoDB & Mongoose** – NoSQL database and ODM for data modeling and persistence.
-* **NextAuth (or JWT)** – Authentication system with credential-based login and session management.
-* **Cloudinary** – Media storage and optimization platform for managing chalet images.
-* **Stripe (Optional)** – Prepared for payment integration.
-* **PWA (Progressive Web App)** – Installable app experience with custom install button (visible to Owner and Admin roles only).
-* **i18n** – Manual language selection between French and English, using centralized translation files.
-
-## Features
-
-* Public marketing site with bilingual support (FR/EN)
-* Responsive menu: Home, Services, FAQ, Contact, Signin, Signup
-* User registration with role selection (Tenant or Owner)
-* Terms & Privacy Policy agreement during signup
-* Dashboards:
-
-  * **Tenant Dashboard:** CRUD for profile, booking dates
-  * **Owner Dashboard:** CRUD for chalet listing, calendar (iCal), images (Cloudinary), contract agreement
-  * **Admin Dashboard:** Approve listings, manage users, publish chalet portfolio pages
-* Chalet public pages generated via dynamic slugs
-* Stripe integration (prepared)
-* PWA support (Install prompt available only for Owner/Admin roles)
-* Protected routes with middleware and role-based access
-
-## Getting Started
-
-### Prerequisites
-
-* Node.js >= 18
-* MongoDB instance or MongoDB Atlas
-* Cloudinary account (for image management)
-* Stripe account (optional, for payment integration)
-
-> ⚠️ You should ensure at least one Admin user is created manually or seeded at startup to access admin functionalities.
-
-### Installation
-
-```bash
-git clone https://github.com/your-username/chalet-manager.git
-cd chalet-manager
-npm install
-```
-
-### Environment Variables
-
-Create a `.env.local` file and configure the following variables:
-
-```env
-MONGODB_URI=your_mongodb_uri
-NEXTAUTH_SECRET=your_nextauth_secret
-NEXTAUTH_URL=http://localhost:3000
-
-CLOUDINARY_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_key
-CLOUDINARY_API_SECRET=your_cloudinary_secret
-
-STRIPE_PUBLIC_KEY=your_stripe_public_key
-STRIPE_SECRET_KEY=your_stripe_secret_key
-```
-
-### Development
-
-```bash
-npm run dev
-```
-
-App will run at [http://localhost:3000](http://localhost:3000)
+- [Next.js 16 App Router](https://nextjs.org/) with React 19.
+- [Tailwind CSS v4](https://tailwindcss.com/) utility styling.
+- [NextAuth v5](https://authjs.dev/) Credentials provider for authentication.
+- [Mongoose](https://mongoosejs.com/) ODM for MongoDB models.
+- [Cloudinary](https://cloudinary.com/) for media storage with local fallback.
+- [Stripe](https://stripe.com/) SDK for Checkout sessions.
 
 ## Project Structure
 
-```bash
+```
 app/
-├── [lang]/              # Multilingual public pages (fr, en)
-│   ├── layout.jsx       # Shared layout (navbar, footer)
-│   ├── page.jsx         # Home
-│   ├── services/        # Services page
-│   ├── faq/             # FAQ
-│   ├── contact/         # Contact page
-│   ├── signin/          # Login page
-│   ├── signup/          # Registration page
-├── tenant/              # Tenant dashboard
-│   ├── layout.jsx       # Layout for tenant
-│   └── page.jsx         # Dashboard home
-├── owner/               # Owner dashboard
-│   ├── layout.jsx       # Layout for owner
-│   └── page.jsx         # Dashboard home
-├── admin/               # Admin dashboard
-│   ├── layout.jsx       # Layout for admin
-│   └── page.jsx         # Dashboard home
-├── chalets/[slug]/      # Public chalet pages
-├── api/                 # API routes
-│   ├── auth/[...nextauth]/route.js
-│   ├── auth/register/route.js
-│   └── ...
-├── locales/             # JSON translation files for i18n (e.g. fr/common.json, en/common.json)
-├── lib/ or utils/       # Translation helpers (getDictionary), Cloudinary, DB, auth utilities
+├── layout.js                 # Global layout and metadata
+├── page.js                   # Redirect to default locale
+├── manifest.js               # PWA manifest
+├── [lang]/                   # Locale specific marketing + auth pages
+│   ├── layout.jsx            # Navbar, footer and dictionary provider
+│   ├── page.jsx              # Home
+│   ├── services/page.jsx     # Services overview
+│   ├── faq/page.jsx          # FAQ
+│   ├── contact/page.jsx      # Contact
+│   ├── terms/page.jsx        # Terms of service
+│   ├── privacy/page.jsx      # Privacy policy
+│   ├── signin/page.jsx       # Sign-in form (NextAuth)
+│   ├── signup/page.jsx       # Registration form
+├── tenant/page.jsx           # Tenant dashboard
+├── owner/page.jsx            # Owner dashboard
+├── admin/page.jsx            # Admin dashboard
+├── chalets/[slug]/page.jsx   # Public chalet pages
+└── api/…                     # Route handlers for auth, CRUD, uploads, Stripe
+components/                   # Reusable UI pieces
+lib/
+├── auth/                     # NextAuth configuration helpers
+├── cloudinary.js             # Cloudinary client initialisation
+├── db/connect.js             # MongoDB connection caching
+├── serializers/chalet.js     # Serializers for chalet documents
+├── utils/slugify.js          # Slug generation helper
+models/                       # Mongoose models (User, Chalet, RentalRequest)
+public/
+├── icons/                    # PWA icons
+├── uploads/                  # Local upload fallback
+└── sw.js                     # Service worker stub
 ```
 
-## Authentication and Roles
+## Data Layer & Authentication
 
-* **NextAuth or JWT** based auth (credentials provider)
-* Session-based authentication with role persistence (Tenant, Owner, Admin)
-* Middleware protects `/tenant`, `/owner`, `/admin` routes
-* Dashboards and API endpoints restricted per role
-* Passwords are hashed using bcrypt
-* Consider adding email verification for additional security
+- `lib/db/connect.js` caches the MongoDB connection for both server components and route handlers.
+- `models/User.js` includes bcrypt password hashing and exposes a `comparePassword` helper used by NextAuth.
+- `lib/auth/options.js` configures the Credentials provider and JWT/session callbacks so every session contains the user id and role.
+- `middleware.js` uses `getToken` from NextAuth to gate server-rendered pages and API routes by role.
 
-## PWA Integration
+## Environment Variables
 
-* `manifest.json` and service worker registered
-* Works offline for cached assets
-* Custom install button only visible to Owner and Admin roles
-* Note: iOS Safari does not support install prompts — users must manually "Add to Home Screen"
+Create a `.env.local` file with the required secrets before running the app:
 
-## Stripe Integration
+```
+AUTH_SECRET=change-me
+MONGODB_URI=mongodb://localhost:27017/chalet-manager
+APP_URL=http://localhost:3000
 
-* Stripe libraries are installed
-* `.env.local` includes keys
-* Prepared backend endpoint for Checkout session
-* Real payments should only be enabled in production with HTTPS and full audit/security review
+# Optional – enables named database selection
+# MONGODB_DB=chalet-manager
 
-## Deployment
+# Optional – enables Cloudinary uploads
+CLOUDINARY_CLOUD_NAME=your_cloud
+CLOUDINARY_API_KEY=your_key
+CLOUDINARY_API_SECRET=your_secret
+CLOUDINARY_FOLDER=chalet-manager
 
-Recommend deployment: **Vercel**
+# Optional – enables Stripe Checkout session creation
+STRIPE_SECRET_KEY=sk_test_...
+```
+
+If Cloudinary values are omitted the upload endpoint falls back to saving files in `public/uploads/` so development can proceed offline.
+
+## Development
 
 ```bash
-npm run build
-npm start
+npm install
+npm run dev
 ```
 
-Add environment variables in Vercel dashboard.
-Ensure `NEXTAUTH_URL` matches deployment domain.
+Visit <http://localhost:3000>. The default locale is French (`/fr`).
 
-## License
+### Seeding Roles
 
-MIT License
+1. Start a MongoDB instance and ensure `MONGODB_URI` points to it.
+2. Register via `/fr/signup` as a tenant or owner to create accounts.
+3. Promote a user to admin inside MongoDB (set `role` to `admin`) to access `/admin`.
 
----
+### Stripe
 
-Built with ❤️ using Next.js, Tailwind CSS, MongoDB, and Cloudinary
+With `STRIPE_SECRET_KEY` set, trigger a checkout session:
+
+```bash
+curl -X POST http://localhost:3000/api/stripe/session \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+The response includes a `url` that can be opened in a browser while using Stripe test keys.
+
+## Deployment Notes
+
+- The project expects the App Router build output (Vercel, Netlify, etc.) with environment variables configured.
+- Middleware relies on `AUTH_SECRET`; production deployments must define it for JWT verification.
+- Ensure the `public/uploads/` directory is writable if the Cloudinary fallback is used in production (recommended to keep Cloudinary enabled instead).
