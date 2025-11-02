@@ -71,7 +71,7 @@ public/
 Create a `.env.local` file with the required secrets before running the app:
 
 ```
-AUTH_SECRET=change-me
+AUTH_SECRET=change-me # NEXTAUTH_SECRET is also supported
 MONGODB_URI=mongodb://localhost:27017/chalet-manager
 APP_URL=http://localhost:3000
 

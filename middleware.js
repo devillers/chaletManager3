@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { AUTH_SECRET } from "./lib/auth/secret";
 
 // Routes protégées par rôle
 const PROTECTED_PREFIXES = [
@@ -35,8 +36,7 @@ export default async function proxy(request) {
   const isProtected = PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
   const isAuthPage = AUTH_PAGES.some((p) => pathname.startsWith(p));
 
-  const secret = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
-  const token = await getToken({ req: request, secret }).catch(() => null);
+  const token = await getToken({ req: request, secret: AUTH_SECRET }).catch(() => null);
   const role = token?.role;
 
   if (isProtected && !token) {
