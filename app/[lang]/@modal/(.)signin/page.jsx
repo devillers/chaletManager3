@@ -7,7 +7,7 @@ export default async function SignInModal({ params }) {
   const dict = await Promise.resolve(getDictionary(lang));
   return (
     <Modal title={dict?.auth?.signinTitle ?? "Sign in"}>
-      <SignInForm compact />
+      <SignInForm compact lang={lang} />
     </Modal>
   );
 }

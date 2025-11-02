@@ -9,10 +9,14 @@ import Alert from "../Alert";
 import { CheckboxField, SelectField, TextField } from "../FormField";
 import { useDictionary } from "../../lib/i18n/context";
 
-export default function SignUpForm({ compact = false }) {
+export default function SignUpForm({ compact = false, lang: langProp }) {
   const dict = useDictionary();
   const router = useRouter();
-  const { lang = "fr" } = useParams() ?? {};
+  const routeParams = useParams();
+  const lang =
+    typeof langProp === "string" && langProp
+      ? langProp
+      : routeParams?.lang ?? "fr";
 
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", password: "",
