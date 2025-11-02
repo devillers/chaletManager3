@@ -1,13 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import { Mountain } from "lucide-react";
+
 import { useParams } from "next/navigation";
 import { Pacifico } from "next/font/google";
 import { useDictionary } from "../lib/i18n/context";
 
 import { GiMountains } from "react-icons/gi";
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
 
 const pacifico = Pacifico({ subsets: ["latin"], weight: "400" });
 
@@ -20,14 +27,21 @@ const SOCIAL_LINKS = [
 
 function localizeHref(href, locale) {
   if (!href) return "#";
-  if (href.startsWith("http") || href.startsWith("mailto") || href.startsWith("tel")) return href;
+  if (
+    href.startsWith("http") ||
+    href.startsWith("mailto") ||
+    href.startsWith("tel")
+  )
+    return href;
   return `/${locale}${href}`.replace(/\/\/+/, "/");
 }
 
 export default function Footer() {
   const dict = useDictionary();
   const params = useParams();
-  const locale = Array.isArray(params?.lang) ? params.lang[0] : params?.lang || "fr";
+  const locale = Array.isArray(params?.lang)
+    ? params.lang[0]
+    : params?.lang || "fr";
 
   const footer = dict.footer ?? {};
   const brand = footer.brand ?? {};
@@ -40,12 +54,19 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   const services =
-    navigation.services?.links?.map((l) => ({ ...l, href: localizeHref(l.href, locale) })) || [];
+    navigation.services?.links?.map((l) => ({
+      ...l,
+      href: localizeHref(l.href, locale),
+    })) || [];
   const company =
-    navigation.company?.links?.map((l) => ({ ...l, href: localizeHref(l.href, locale) })) || [];
+    navigation.company?.links?.map((l) => ({
+      ...l,
+      href: localizeHref(l.href, locale),
+    })) || [];
 
   const bottomLinks =
-    bottom.links?.map((l) => ({ ...l, href: localizeHref(l.href, locale) })) || [];
+    bottom.links?.map((l) => ({ ...l, href: localizeHref(l.href, locale) })) ||
+    [];
 
   const adminLink = {
     name: locale === "fr" ? "Connexion Admin" : "Admin login",
@@ -61,21 +82,30 @@ export default function Footer() {
       {/* 4 colonnes */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-
           {/* Colonne 1 - Logo / texte / contact */}
           <div>
             <div className="flex items-center space-x-2 mb-6">
-              <GiMountains className="w-7 h-7 text-amber-700" />
-              <span className={`${pacifico.className} text-xl text-white`}>{brandName}</span>
+              <Mountain
+                className="h-20 w-20 text-amber-700"
+                aria-hidden="true"
+              />
+              <span className={`${pacifico.className} text-xl text-neutral-100`}>
+                {brandName}
+              </span>
             </div>
             {brand.description && (
-              <p className="text-neutral-500 leading-relaxed mb-6">{brand.description}</p>
+              <p className="text-neutral-500 leading-relaxed mb-6">
+                {brand.description}
+              </p>
             )}
             <div className="space-y-3 text-neutral-400">
               {contact.email && (
                 <div className="flex items-center space-x-3">
-                  <FiMail className="text-amber-700" />
-                  <a href={`mailto:${contact.email}`} className="hover:text-white transition">
+                  <FiMail className="text-amber-700 shrink-0" />
+                  <a
+                    href={`mailto:${contact.email}`}
+                    className="hover:text-white transition"
+                  >
                     {contact.email}
                   </a>
                 </div>
@@ -83,7 +113,10 @@ export default function Footer() {
               {contact.phone && (
                 <div className="flex items-center space-x-3">
                   <FiPhone className="text-amber-700" />
-                  <a href={`tel:${contact.phone}`} className="hover:text-white transition">
+                  <a
+                    href={`tel:${contact.phone}`}
+                    className="hover:text-white transition"
+                  >
                     {contact.phone}
                   </a>
                 </div>
@@ -112,7 +145,10 @@ export default function Footer() {
             <ul className="space-y-3">
               {services.map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} className="hover:text-white transition">
+                  <Link
+                    href={item.href}
+                    className="hover:text-white transition"
+                  >
                     {item.name}
                   </Link>
                 </li>
@@ -128,7 +164,10 @@ export default function Footer() {
             <ul className="space-y-3">
               {company.map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} className="hover:text-white transition">
+                  <Link
+                    href={item.href}
+                    className="hover:text-white transition"
+                  >
                     {item.name}
                   </Link>
                 </li>
@@ -142,7 +181,9 @@ export default function Footer() {
               {newsletter.title}
             </h3>
             {newsletter.description && (
-              <p className="text-neutral-500 text-xs mb-3">{newsletter.description}</p>
+              <p className="text-neutral-500 text-xs mb-3">
+                {newsletter.description}
+              </p>
             )}
             <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
               <input
@@ -157,7 +198,9 @@ export default function Footer() {
 
             {newsletter.followUs && (
               <>
-                <p className="text-neutral-500 text-xs mt-6 mb-3">{newsletter.followUs}</p>
+                <p className="text-neutral-500 text-xs mt-6 mb-3">
+                  {newsletter.followUs}
+                </p>
                 <div className="flex space-x-3">
                   {SOCIAL_LINKS.map(({ name, href, icon: Icon }) => (
                     <a
@@ -176,23 +219,43 @@ export default function Footer() {
       </div>
 
       {/* Bas du footer */}
+
+
       <div className="border-t border-neutral-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <div className="text-xs text-neutral-500">
-            © {year} {brandName}. {bottom?.copyright}
-          </div>
-          <div className="flex space-x-6 text-xs">
-            {displayBottomLinks.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`uppercase hover:text-white transition ${
-                  item.href === adminLink.href ? "text-amber-700" : "text-neutral-500"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="text-[10px] text-neutral-600 uppercase">
+              © {year} {brandName}. {bottom?.copyright}
+            </div>
+            <div className="flex items-center space-x-6">
+              {displayBottomLinks.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-[11px] uppercase hover:text-white transition-colors duration-200 ${
+                    item.href === adminLink.href
+                      ? "text-amber-700"
+                      : "text-neutral-500"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+
+              {bottomLinks.length === 0 && (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-[11px] text-amber-700 uppercase hover:text-white transition-colors duration-200  ${
+                    item.href === adminLink.href
+                      ? "text-amber-700"
+                      : "text-neutral-500"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
