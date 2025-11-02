@@ -227,24 +227,24 @@ export default function Footer() {
       };
 
   return (
-    <footer className="bg-neutral-900 text-neutral-600 text-[12px] font-light" role="contentinfo">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-neutral-950 text-neutral-400 text-xs" role="contentinfo">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-6">
-              <Mountain className="h-8 w-8 text-amber-700" />
-              <span className={`${pacifico.className} text-xl text-neutral-100`}>{brandName}</span>
+            <div className="flex items-center gap-2 mb-6">
+              <Mountain className="h-6 w-6 text-amber-600" />
+              <span className={`${pacifico.className} text-lg text-neutral-100`}>{brandName}</span>
             </div>
 
-            {brand.description && <p className="text-neutral-600 mb-6 leading-relaxed">{brand.description}</p>}
+            {brand.description && <p className="text-neutral-500 mb-6 leading-relaxed text-sm">{brand.description}</p>}
 
             <div className="space-y-3">
               {contact.email && (
-                <div className="flex items-center space-x-3">
-                  <Mail className="h-5 w-5 text-amber-700 flex-shrink-0" />
+                <div className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-amber-600 flex-shrink-0" />
                   <a
                     href={`mailto:${contact.email}`}
-                    className="text-neutral-600 hover:text-white transition-colors rounded"
+                    className="text-neutral-400 hover:text-white transition-colors rounded"
                   >
                     {contact.email}
                   </a>
@@ -252,11 +252,11 @@ export default function Footer() {
               )}
 
               {contact.phone && (
-                <div className="flex items-center space-x-3">
-                  <Phone className="h-5 w-5 text-amber-700 flex-shrink-0" />
+                <div className="flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-amber-600 flex-shrink-0" />
                   <a
                     href={`tel:${contact.phone.replace(/\s+/g, "")}`}
-                    className="text-neutral-600 hover:text-white transition-colors rounded"
+                    className="text-neutral-400 hover:text-white transition-colors rounded"
                   >
                     {contact.phone}
                   </a>
@@ -264,9 +264,9 @@ export default function Footer() {
               )}
 
               {Array.isArray(contact.locationLines) && contact.locationLines.length > 0 && (
-                <div className="flex items-start space-x-3">
-                  <MapPin className="h-5 w-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-neutral-600">
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-neutral-400">
                     {contact.locationLines.map((line, index) => (
                       <span key={line}>
                         {line}
@@ -280,15 +280,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-lg uppercase text-neutral-100 font-thin mb-6">
+            <h3 className="text-sm uppercase tracking-[0.15em] text-neutral-200 font-medium mb-4">
               {localizedNavigation.services.title}
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {localizedNavigation.services.links.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-neutral-600 hover:text-white transition-colors duration-200 block rounded"
+                    className="text-neutral-400 hover:text-white transition-colors duration-200 block rounded"
                   >
                     {item.name}
                   </Link>
@@ -298,15 +298,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-lg uppercase text-neutral-100 font-thin mb-6">
+            <h3 className="text-sm uppercase tracking-[0.15em] text-neutral-200 font-medium mb-4">
               {localizedNavigation.company.title}
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {localizedNavigation.company.links.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-neutral-600 hover:text-white transition-colors duration-200 block rounded"
+                    className="text-neutral-400 hover:text-white transition-colors duration-200 block rounded"
                   >
                     {item.name}
                   </Link>
@@ -316,20 +316,20 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-lg uppercase text-neutral-100 font-thin mb-6">{newsletter.title}</h3>
+            <h3 className="text-sm uppercase tracking-[0.15em] text-neutral-200 font-medium mb-4">{newsletter.title}</h3>
 
             {newsletter.description && (
-              <div className="mb-6">
-                <p className="text-neutral-600 text-xs mb-3">{newsletter.description}</p>
+              <div className="mb-5">
+                <p className="text-neutral-500 text-xs leading-relaxed mb-3">{newsletter.description}</p>
                 <form className="space-y-2" onSubmit={(event) => event.preventDefault()}>
                   <input
                     type="email"
                     placeholder={newsletter.placeholder}
-                    className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500"
+                    className="w-full px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-600"
                   />
                   <button
                     type="submit"
-                    className="w-full px-4 py-2 bg-amber-700 text-white rounded-lg font-medium hover:bg-amber-800 transition-colors duration-200"
+                    className="w-full px-4 py-2 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-500 transition-colors duration-200"
                   >
                     {newsletter.button}
                   </button>
@@ -339,16 +339,16 @@ export default function Footer() {
 
             {newsletter.followUs && (
               <div>
-                <p className="text-xs text-neutral-600 mb-3">{newsletter.followUs}</p>
-                <div className="flex space-x-3">
+                <p className="text-xs text-neutral-500 mb-3">{newsletter.followUs}</p>
+                <div className="flex gap-2">
                   {SOCIAL_LINKS.map(({ name, href, icon: IconComponent }) => (
                     <a
                       key={name}
                       href={href}
-                      className="p-2 bg-neutral-800 rounded-lg hover:bg-amber-700 transition-colors duration-200 group"
+                      className="p-1.5 bg-neutral-900 rounded-md hover:bg-amber-600 transition-colors duration-200 group border border-neutral-800"
                       aria-label={name}
                     >
-                      <IconComponent className="h-5 w-5 text-neutral-600 group-hover:text-white" />
+                      <IconComponent className="h-4 w-4 text-neutral-500 group-hover:text-white" />
                     </a>
                   ))}
                 </div>
@@ -358,20 +358,20 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-neutral-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-[11px] text-neutral-600 uppercase">
+      <div className="border-t border-neutral-900/70">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] uppercase tracking-[0.2em]">
+            <div className="text-neutral-500 text-center md:text-left">
               © {currentYear} {brandName}. {bottomBar.copyright}
             </div>
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center gap-5">
               {displayBottomLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={[
-                    "text-[11px] uppercase hover:text-white transition-colors duration-200 rounded",
-                    item.href === adminLink.href ? "text-amber-700" : "text-neutral-600",
+                    "hover:text-white transition-colors duration-200 rounded",
+                    item.href === adminLink.href ? "text-amber-600" : "text-neutral-500",
                   ].join(" ")}
                 >
                   {item.name}
@@ -381,7 +381,7 @@ export default function Footer() {
               {displayBottomLinks.length === 0 && (
                 <Link
                   href={adminLink.href}
-                  className="text-[11px] text-amber-700 uppercase hover:text-white transition-colors duration-200 rounded"
+                  className="text-amber-600 hover:text-white transition-colors duration-200 rounded"
                 >
                   {adminLink.name}
                 </Link>
@@ -390,7 +390,7 @@ export default function Footer() {
               {displayBottomLinks.length > 0 && (
                 <Link
                   href={adminLink.href}
-                  className="text-[11px] uppercase hover:text-white transition-colors duration-200 rounded text-amber-700"
+                  className="hover:text-white transition-colors duration-200 rounded text-amber-600"
                 >
                   {adminLink.name}
                 </Link>
