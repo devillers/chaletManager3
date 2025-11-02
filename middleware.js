@@ -1,17 +1,20 @@
-// proxy.js
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 // Routes protégées par rôle
 const PROTECTED_PREFIXES = [
-  "/tenant", "/owner", "/admin",
-  "/api/tenant", "/api/owner", "/api/admin",
+  "/tenant",
+  "/owner",
+  "/admin",
+  "/api/tenant",
+  "/api/owner",
+  "/api/admin",
 ];
 
 // Pages d'auth publiques
 const AUTH_PAGES = ["/fr/signin", "/fr/signup", "/en/signin", "/en/signup"];
 
-export default async function proxy(request) {
+export default async function middleware(request) {
   const url = request.nextUrl;
   const { pathname, search } = url;
 
@@ -28,11 +31,12 @@ export default async function proxy(request) {
     }
   }
 
-  // 1) Auth / rôles (NextAuth v4 → NEXTAUTH_SECRET)
+  // 1) Auth / rôles (NextAuth v4 → AUTH_SECRET)
   const isProtected = PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
   const isAuthPage = AUTH_PAGES.some((p) => pathname.startsWith(p));
 
-  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET }).catch(() => null);
+  const secret = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
+  const token = await getToken({ req: request, secret }).catch(() => null);
   const role = token?.role;
 
   if (isProtected && !token) {

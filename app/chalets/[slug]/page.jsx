@@ -1,19 +1,25 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { unstable_cache } from "next/cache";
 import { connectToDatabase } from "../../../lib/db/connect";
 import { serializeChalet } from "../../../lib/serializers/chalet";
 import Chalet from "../../../models/Chalet";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
-async function fetchChalet(slug) {
-  await connectToDatabase();
-  const doc = await Chalet.findOne({ slug, status: "published" });
-  return doc ? serializeChalet(doc) : null;
-}
+const getChalet = unstable_cache(
+  async (slug) => {
+    await connectToDatabase();
+    const doc = await Chalet.findOne({ slug, status: "published" });
+    return doc ? serializeChalet(doc) : null;
+  },
+  ["chalet-by-slug"],
+  { revalidate },
+);
 
 export async function generateMetadata({ params }) {
-  const chalet = await fetchChalet(params.slug);
+  const chalet = await getChalet(params.slug);
   if (!chalet) {
     return { title: "Chalet Manager" };
   }
@@ -29,7 +35,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ChaletPage({ params }) {
-  const chalet = await fetchChalet(params.slug);
+  const chalet = await getChalet(params.slug);
   if (!chalet) {
     notFound();
   }
@@ -47,8 +53,15 @@ export default async function ChaletPage({ params }) {
       <main className="mx-auto max-w-5xl space-y-10 px-4 py-12">
         {chalet.heroUrl ? (
           <div className="overflow-hidden rounded-2xl">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={chalet.heroUrl} alt={chalet.title} className="h-96 w-full object-cover" />
+            <Image
+              src={chalet.heroUrl}
+              alt={chalet.title}
+              width={1920}
+              height={1080}
+              className="h-96 w-full object-cover"
+              priority
+              sizes="(max-width: 1024px) 100vw, 1024px"
+            />
           </div>
         ) : null}
         <section className="space-y-3">
@@ -61,8 +74,14 @@ export default async function ChaletPage({ params }) {
             <div className="grid gap-6 md:grid-cols-2">
               {chalet.photos.map((photo) => (
                 <figure key={photo.url} className="space-y-3">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={photo.url} alt={photo.roomName || "Chalet photo"} className="h-56 w-full rounded-xl object-cover" />
+                  <Image
+                    src={photo.url}
+                    alt={photo.roomName || "Chalet photo"}
+                    width={1280}
+                    height={720}
+                    className="h-56 w-full rounded-xl object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                   <figcaption className="text-sm text-neutral-600">
                     <span className="font-semibold text-neutral-900">{photo.roomName}</span>
                     {photo.roomDescription ? ` – ${photo.roomDescription}` : ""}
@@ -78,7 +97,10 @@ export default async function ChaletPage({ params }) {
           {chalet.icalUrl ? (
             <a
               href={chalet.icalUrl}
-              className="inline-flex items-center rounded-md border border-neutral-300 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-100"
+              className={[
+                "inline-flex items-center rounded-md border border-neutral-300 px-4 py-2 text-sm font-semibold",
+                "text-neutral-700 hover:bg-neutral-100",
+              ].join(" ")}
             >
               Download availability calendar
             </a>
