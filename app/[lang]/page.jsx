@@ -1,34 +1,24 @@
 // app/[lang]/page.jsx
 import Link from "next/link";
-import { Section } from "../../components/Section";
+import { Section } from "../../components/Section"; // <= chemin corrigé
 import { SUPPORTED_LANGUAGES, getDictionary } from "../../lib/i18n/dictionaries";
 
-function normalizeLang(raw) {
-  const l = (typeof raw === "string" ? raw : "fr").toLowerCase();
-  return (SUPPORTED_LANGUAGES || ["fr", "en"]).includes(l) ? l : "fr";
-}
-
-export async function generateMetadata(props) {
-  const { lang: raw } = await props.params;                   // ✅ params est une Promise
-  const lang = normalizeLang(raw);
-  const dict = await Promise.resolve(getDictionary(lang));     // ✅ safe sync/async
-
+export async function generateMetadata({ params }) {
+  const { lang } = await params; // ✅ params est une Promise en v15
+  const dict = await Promise.resolve(getDictionary(lang));
   return {
     title: `Chalet Manager – ${dict?.hero?.title ?? "Home"}`,
     description: dict?.hero?.subtitle ?? undefined,
     alternates: {
       canonical: `/${lang}`,
-      languages: Object.fromEntries(
-        (SUPPORTED_LANGUAGES ?? ["fr", "en"]).map((l) => [l, `/${l}`])
-      ),
+      languages: Object.fromEntries((SUPPORTED_LANGUAGES ?? ["fr", "en"]).map((l) => [l, `/${l}`])),
     },
   };
 }
 
-export default async function HomePage(props) {
-  const { lang: raw } = await props.params;                   // ✅ params await
-  const lang = normalizeLang(raw);
-  const dict = await Promise.resolve(getDictionary(lang));     // ✅ safe sync/async
+export default async function HomePage({ params }) {
+  const { lang } = await params; // ✅ important
+  const dict = await Promise.resolve(getDictionary(lang));
   const t = (fr, en) => (lang === "fr" ? fr : en);
 
   return (

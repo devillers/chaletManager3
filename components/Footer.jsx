@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDictionary } from "../lib/i18n/context";
 
-export default function Footer({ year }) {
+export default function Footer() {
   const dict = useDictionary();
   const pathname = usePathname() || "/";
   const lang = (pathname.split("/").filter(Boolean)[0] || "fr").toLowerCase();
@@ -19,6 +19,8 @@ export default function Footer({ year }) {
         { href: "/en/terms", label: "Terms" },
         { href: "/en/privacy", label: "Privacy" },
       ];
+
+  const year = 2025; // <-- fixe
 
   return (
     <footer className="border-t border-neutral-200 bg-white py-8">
