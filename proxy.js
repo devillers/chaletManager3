@@ -14,7 +14,7 @@ const PROTECTED_PREFIXES = [
 // Pages d'auth publiques
 const AUTH_PAGES = ["/fr/signin", "/fr/signup", "/en/signin", "/en/signup"];
 
-export default async function middleware(request) {
+export default async function proxy(request) {
   const url = request.nextUrl;
   const { pathname, search } = url;
 
