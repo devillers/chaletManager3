@@ -1,3 +1,4 @@
+import React from "react";
 import { Section } from "../../../components/Section";
 import { getDictionary } from "../../../lib/i18n/dictionaries";
 
@@ -7,7 +8,8 @@ export const metadata = {
 };
 
 export default function ServicesPage({ params }) {
-  const dict = getDictionary(params.lang);
+  const { lang } = React.use(params);
+  const dict = getDictionary(lang);
   return (
     <div className="space-y-12">
       <section className="bg-neutral-900 py-20 text-white">
@@ -42,16 +44,16 @@ export default function ServicesPage({ params }) {
           </div>
         </div>
       </Section>
-      <Section title={params.lang === "fr" ? "Processus de publication" : "Publication process"}>
+      <Section title={lang === "fr" ? "Processus de publication" : "Publication process"}>
         <ol className="space-y-3 text-neutral-700">
           {[
-            params.lang === "fr"
+            lang === "fr"
               ? "Le propriétaire complète la fiche détaillée de son chalet."
               : "The owner completes a detailed chalet profile.",
-            params.lang === "fr"
+            lang === "fr"
               ? "Signature numérique du contrat de partenariat."
               : "Digital signature of the partnership agreement.",
-            params.lang === "fr"
+            lang === "fr"
               ? "Validation par un super administrateur et mise en ligne avec URL dédiée."
               : "Review by a super admin and publication with a dedicated URL.",
           ].map((item, index) => (

@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import Alert from "../../../components/Alert";
 import { CheckboxField, SelectField, TextField } from "../../../components/FormField";
 import { useDictionary } from "../../../lib/i18n/context";
@@ -21,7 +21,7 @@ export default function SignUpPage({ params }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  const lang = params.lang;
+  const { lang } = React.use(params);
 
   function updateField(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }));

@@ -2,7 +2,7 @@
 
 import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import Alert from "../../../components/Alert";
 import { TextField } from "../../../components/FormField";
 import { useDictionary } from "../../../lib/i18n/context";
@@ -14,7 +14,7 @@ export default function SignInPage({ params }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const lang = params.lang;
+  const { lang } = React.use(params);
 
   async function handleSubmit(event) {
     event.preventDefault();
