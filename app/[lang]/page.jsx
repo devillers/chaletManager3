@@ -35,7 +35,7 @@ export default async function HomePage(props) {
     <div>
       <section className="relative overflow-hidden bg-neutral-900 py-24 text-white">
         <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_top,_#2d2d2d,_#090909)] opacity-80"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_top,#2d2d2d,#090909)] opacity-80"
           aria-hidden="true"
         />
         <div className="relative mx-auto flex max-w-5xl flex-col gap-6 px-4">

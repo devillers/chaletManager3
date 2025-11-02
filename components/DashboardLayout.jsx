@@ -8,7 +8,7 @@ export default function DashboardLayout({ title, description, links, children, r
   return (
     <div className="min-h-screen bg-neutral-50">
       <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 py-10 md:px-6">
-        <aside className="hidden w-64 flex-shrink-0 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm md:block">
+        <aside className="hidden w-64 shrink-0 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm md:block">
           <h1 className="text-lg font-semibold text-neutral-900">{title}</h1>
           {description ? <p className="mt-2 text-sm text-neutral-600">{description}</p> : null}
           <nav className="mt-6 space-y-2">
