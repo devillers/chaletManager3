@@ -7,9 +7,7 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
-  experimental: {
-    ppr: "incremental",
-  },
+
 };
 
 export default nextConfig;
