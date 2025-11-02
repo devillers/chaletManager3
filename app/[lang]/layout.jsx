@@ -8,12 +8,13 @@ export function generateStaticParams() {
   return SUPPORTED_LANGUAGES.map((lang) => ({ lang }));
 }
 
-export function generateMetadata({ params }) {
-  const dictionary = getDictionary(params.lang);
+export async function generateMetadata({ params }) {
+  const { lang } = await params;
+  const dictionary = getDictionary(lang);
   return {
     title: `Chalet Manager – ${dictionary.navigation.home}`,
     alternates: {
-      canonical: `/${params.lang}`,
+      canonical: `/${lang}`,
       languages: Object.fromEntries(
         SUPPORTED_LANGUAGES.map((language) => [language, `/${language}`]),
       ),
@@ -21,13 +22,14 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function LocaleLayout({ children, params }) {
-  const dictionary = getDictionary(params.lang);
+export default async function LocaleLayout({ children, params }) {
+  const { lang } = await params;
+  const dictionary = getDictionary(lang);
   return (
     <DictionaryProvider value={dictionary}>
       <div className="flex min-h-screen flex-col bg-white">
         <ServiceWorkerRegister />
-        <Navbar lang={params.lang} />
+        <Navbar lang={lang} />
         <main className="flex-1">{children}</main>
         <Footer />
       </div>
