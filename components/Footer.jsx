@@ -242,19 +242,6 @@ export default function Footer() {
                 </Link>
               ))}
 
-              {bottomLinks.length === 0 && (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-[11px] text-amber-700 uppercase hover:text-white transition-colors duration-200  ${
-                    item.href === adminLink.href
-                      ? "text-amber-700"
-                      : "text-neutral-500"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              )}
             </div>
           </div>
         </div>
