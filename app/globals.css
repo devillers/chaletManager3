@@ -8,6 +8,3 @@ body {
   font-family: var(--font-geist-sans);
 }
 
-a {
-  transition: color 0.2s ease, background-color 0.2s ease;
-}

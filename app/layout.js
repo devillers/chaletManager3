@@ -24,7 +24,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="min-h-full" suppressHydrationWarning>
+    <html lang="fr" className="min-h-full" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} bg-neutral-50 text-neutral-900`}>
         {children}
       </body>
