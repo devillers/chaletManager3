@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { useDictionary } from "../lib/i18n/context";
 
