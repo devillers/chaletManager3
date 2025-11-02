@@ -7,9 +7,8 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
-  experimental: {
-    ppr: "incremental",
-  },
+  // ✅ PPR est désormais inclus via Cache Components
+  cacheComponents: true,
 };
 
 export default nextConfig;

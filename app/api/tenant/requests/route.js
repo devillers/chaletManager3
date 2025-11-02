@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { auth } from "../../../../lib/auth";
@@ -17,18 +19,14 @@ function serializeRequest(doc) {
 }
 
 async function requireTenant() {
-  const session = await auth();
-  if (!session || session.user.role !== "tenant") {
-    return null;
-  }
+  const session = await auth(); // v4 helper
+  if (!session || session.user.role !== "tenant") return null;
   return session;
 }
 
 export async function GET() {
   const session = await requireTenant();
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   await connectToDatabase();
   const requests = await RentalRequest.find({ tenant: session.user.id }).sort({ createdAt: -1 });
@@ -37,9 +35,7 @@ export async function GET() {
 
 export async function POST(request) {
   const session = await requireTenant();
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { startDate, endDate, note, guests } = await request.json();
   if (!startDate || !endDate) {
@@ -61,7 +57,7 @@ export async function POST(request) {
     startDate: start,
     endDate: end,
     notes: note || "",
-    guests: guests && Number.isFinite(guests) ? Math.max(1, guests) : 1,
+    guests: Number.isFinite(guests) ? Math.max(1, guests) : 1,
   });
 
   return NextResponse.json(serializeRequest(created), { status: 201 });
@@ -69,9 +65,7 @@ export async function POST(request) {
 
 export async function DELETE(request) {
   const session = await requireTenant();
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
@@ -81,9 +75,7 @@ export async function DELETE(request) {
 
   await connectToDatabase();
   const deleted = await RentalRequest.findOneAndDelete({ _id: id, tenant: session.user.id });
-  if (!deleted) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
+  if (!deleted) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   return NextResponse.json({ success: true });
 }

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { auth } from "../../../../lib/auth";
 import { connectToDatabase } from "../../../../lib/db/connect";
@@ -12,14 +14,11 @@ export async function POST() {
 
   await connectToDatabase();
   const chalet = await Chalet.findOne({ owner: session.user.id });
-  if (!chalet) {
-    return NextResponse.json({ error: "Chalet missing" }, { status: 400 });
-  }
+  if (!chalet) return NextResponse.json({ error: "Chalet missing" }, { status: 400 });
 
-  chalet.contractAcceptedAt = new Date();
-  if (chalet.status === "draft") {
-    chalet.status = "pending";
-  }
+  chalet.contractAcceptedAt = new Date(); // OK côté serveur
+  if (chalet.status === "draft") chalet.status = "pending";
+
   const saved = await chalet.save();
   return NextResponse.json(serializeChalet(saved));
 }

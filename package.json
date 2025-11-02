@@ -6,11 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "next lint"
   },
   "dependencies": {
     "next": "16.0.1",
-    "next-auth": "5.0.0",
+    "next-auth": "^4",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "bcryptjs": "^2.4.3",
@@ -21,7 +21,11 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "tailwindcss": "^4",
+    "postcss": "^8.4.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.1"
+  },
+  "engines": {
+    "node": ">=20.9.0"
   }
 }

@@ -1,33 +1,47 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Suspense } from "react";
+import { headers } from "next/headers";             // ✅
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import ServiceWorkerRegister from "../components/ServiceWorkerRegister";
+import { DictionaryProvider } from "../lib/i18n/context";
+import { SUPPORTED_LANGUAGES, getDictionary } from "../lib/i18n/dictionaries";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export async function generateStaticParams() {
+  return SUPPORTED_LANGUAGES.map((lang) => ({ lang }));
+}
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+export async function generateMetadata({ params }) {
+  const { lang } = await params;
+  const dictionary = await Promise.resolve(getDictionary(lang));
+  return {
+    title: `Chalet Manager – ${dictionary.navigation.home}`,
+    alternates: {
+      canonical: `/${lang}`,
+      languages: Object.fromEntries(SUPPORTED_LANGUAGES.map((l) => [l, `/${l}`])),
+    },
+  };
+}
 
-export const metadata = {
-  title: "Chalet Manager",
-  description:
-    "Chalet Manager is a bilingual platform to manage luxury chalet rentals with dedicated dashboards for tenants, owners and administrators.",
-  applicationName: "Chalet Manager",
-};
+export default async function LocaleLayout({ children, modal, params }) {
+  const { lang } = await params;
+  const dictionary = await Promise.resolve(getDictionary(lang));
 
-export const viewport = {
-  themeColor: "#111111",
-};
+  headers();                                       // ✅ rend le segment dynamique
+  const year = new Date().getFullYear();           // ✅ maintenant autorisé
 
-export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="min-h-full" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} bg-neutral-50 text-neutral-900`}>
-        {children}
-      </body>
-    </html>
+    <DictionaryProvider value={dictionary}>
+      <div className="flex min-h-screen flex-col bg-white">
+        <ServiceWorkerRegister />
+        <Suspense fallback={null}>
+          <Navbar />
+        </Suspense>
+        <main className="flex-1">{children}</main>
+        <Suspense fallback={null}>
+          <Footer year={year} />                    {/* ✅ pas de new Date dans Footer */}
+        </Suspense>
+        <Suspense fallback={null}>{modal}</Suspense>
+      </div>
+    </DictionaryProvider>
   );
 }
