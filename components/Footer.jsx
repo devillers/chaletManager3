@@ -227,24 +227,26 @@ export default function Footer() {
       };
 
   return (
-    <footer className="bg-neutral-950 text-neutral-400 text-xs" role="contentinfo">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <Mountain className="h-6 w-6 text-amber-600" />
-              <span className={`${pacifico.className} text-lg text-neutral-100`}>{brandName}</span>
+    <footer className="bg-neutral-950 text-neutral-300" role="contentinfo">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+          <div className="lg:col-span-1 space-y-6">
+            <div className="flex items-center gap-3">
+              <Mountain className="h-6 w-6 text-amber-500" />
+              <span className={`${pacifico.className} text-xl text-white`}>{brandName}</span>
             </div>
 
-            {brand.description && <p className="text-neutral-500 mb-6 leading-relaxed text-sm">{brand.description}</p>}
+            {brand.description && (
+              <p className="text-sm leading-relaxed text-neutral-400">{brand.description}</p>
+            )}
 
-            <div className="space-y-3">
+            <div className="space-y-4 text-sm">
               {contact.email && (
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-amber-600 flex-shrink-0" />
+                <div className="flex items-center gap-3">
+                  <Mail className="h-3 w-3 text-amber-500 flex-shrink-0" />
                   <a
                     href={`mailto:${contact.email}`}
-                    className="text-neutral-400 hover:text-white transition-colors rounded"
+                    className="transition-colors duration-150 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                   >
                     {contact.email}
                   </a>
@@ -252,11 +254,11 @@ export default function Footer() {
               )}
 
               {contact.phone && (
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-amber-600 flex-shrink-0" />
+                <div className="flex items-center gap-3">
+                  <Phone className="h-3 w-3 text-amber-500 flex-shrink-0" />
                   <a
                     href={`tel:${contact.phone.replace(/\s+/g, "")}`}
-                    className="text-neutral-400 hover:text-white transition-colors rounded"
+                    className="transition-colors duration-150 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                   >
                     {contact.phone}
                   </a>
@@ -264,8 +266,8 @@ export default function Footer() {
               )}
 
               {Array.isArray(contact.locationLines) && contact.locationLines.length > 0 && (
-                <div className="flex items-start gap-2">
-                  <MapPin className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3">
+                  <MapPin className="mt-1 h-3 w-3 text-amber-500 flex-shrink-0" />
                   <span className="text-neutral-400">
                     {contact.locationLines.map((line, index) => (
                       <span key={line}>
@@ -279,16 +281,16 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
-            <h3 className="text-sm uppercase tracking-[0.15em] text-neutral-200 font-medium mb-4">
+          <div className="space-y-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-200">
               {localizedNavigation.services.title}
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3 text-sm">
               {localizedNavigation.services.links.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-neutral-400 hover:text-white transition-colors duration-200 block rounded"
+                    className="transition-colors duration-150 hover:text-white focus-visible:outline-none focus-visible:text-white focus-visible:underline"
                   >
                     {item.name}
                   </Link>
@@ -297,16 +299,16 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-sm uppercase tracking-[0.15em] text-neutral-200 font-medium mb-4">
+          <div className="space-y-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-200">
               {localizedNavigation.company.title}
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3 text-sm">
               {localizedNavigation.company.links.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-neutral-400 hover:text-white transition-colors duration-200 block rounded"
+                    className="transition-colors duration-150 hover:text-white focus-visible:outline-none focus-visible:text-white focus-visible:underline"
                   >
                     {item.name}
                   </Link>
@@ -315,40 +317,47 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-sm uppercase tracking-[0.15em] text-neutral-200 font-medium mb-4">{newsletter.title}</h3>
+          <div className="space-y-5">
+            <div className="space-y-4">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-200">
+                {newsletter.title}
+              </h3>
 
-            {newsletter.description && (
-              <div className="mb-5">
-                <p className="text-neutral-500 text-xs leading-relaxed mb-3">{newsletter.description}</p>
-                <form className="space-y-2" onSubmit={(event) => event.preventDefault()}>
-                  <input
-                    type="email"
-                    placeholder={newsletter.placeholder}
-                    className="w-full px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-600"
-                  />
-                  <button
-                    type="submit"
-                    className="w-full px-4 py-2 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-500 transition-colors duration-200"
-                  >
-                    {newsletter.button}
-                  </button>
-                </form>
-              </div>
+              {newsletter.description && (
+                <p className="text-sm leading-relaxed text-neutral-400">{newsletter.description}</p>
+              )}
+            </div>
+
+            {newsletter.placeholder && newsletter.button && (
+              <form className="space-y-3" onSubmit={(event) => event.preventDefault()}>
+                <input
+                  type="email"
+                  placeholder={newsletter.placeholder}
+                  className="w-full rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-2 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-amber-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
+                />
+                <button
+                  type="submit"
+                  className="w-full rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-neutral-900 transition-colors duration-150 hover:bg-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
+                >
+                  {newsletter.button}
+                </button>
+              </form>
             )}
 
             {newsletter.followUs && (
-              <div>
-                <p className="text-xs text-neutral-500 mb-3">{newsletter.followUs}</p>
-                <div className="flex gap-2">
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">
+                  {newsletter.followUs}
+                </p>
+                <div className="flex items-center gap-2">
                   {SOCIAL_LINKS.map(({ name, href, icon: IconComponent }) => (
                     <a
                       key={name}
                       href={href}
-                      className="p-1.5 bg-neutral-900 rounded-md hover:bg-amber-600 transition-colors duration-200 group border border-neutral-800"
+                      className="group flex h-9 w-9 items-center justify-center rounded-full border border-neutral-800 bg-neutral-900 transition-colors duration-150 hover:border-amber-500 hover:bg-amber-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                       aria-label={name}
                     >
-                      <IconComponent className="h-4 w-4 text-neutral-500 group-hover:text-white" />
+                      <IconComponent className="h-4 w-4 text-neutral-400 transition-colors duration-150 group-hover:text-neutral-900" />
                     </a>
                   ))}
                 </div>
@@ -358,43 +367,30 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-neutral-900/70">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] uppercase tracking-[0.2em]">
-            <div className="text-neutral-500 text-center md:text-left">
-              © {currentYear} {brandName}. {bottomBar.copyright}
+      <div className="border-t border-neutral-900/80">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col gap-4 text-xs text-neutral-500 md:flex-row md:items-center md:justify-between">
+            <div className="text-center md:text-left">
+              © {currentYear} {brandName}
+              {bottomBar.copyright ? `. ${bottomBar.copyright}` : null}
             </div>
-            <div className="flex items-center gap-5">
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
               {displayBottomLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={[
-                    "hover:text-white transition-colors duration-200 rounded",
-                    item.href === adminLink.href ? "text-amber-600" : "text-neutral-500",
-                  ].join(" ")}
+                  className="transition-colors duration-150 hover:text-white focus-visible:outline-none focus-visible:text-white focus-visible:underline"
                 >
                   {item.name}
                 </Link>
               ))}
 
-              {displayBottomLinks.length === 0 && (
-                <Link
-                  href={adminLink.href}
-                  className="text-amber-600 hover:text-white transition-colors duration-200 rounded"
-                >
-                  {adminLink.name}
-                </Link>
-              )}
-
-              {displayBottomLinks.length > 0 && (
-                <Link
-                  href={adminLink.href}
-                  className="hover:text-white transition-colors duration-200 rounded text-amber-600"
-                >
-                  {adminLink.name}
-                </Link>
-              )}
+              <Link
+                href={adminLink.href}
+                className="font-semibold text-amber-500 transition-colors duration-150 hover:text-amber-400 focus-visible:outline-none focus-visible:text-amber-300 focus-visible:underline"
+              >
+                {adminLink.name}
+              </Link>
             </div>
           </div>
         </div>
