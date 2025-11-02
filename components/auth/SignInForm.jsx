@@ -9,10 +9,14 @@ import Alert from "../../components/Alert";
 import { TextField } from "../../components/FormField";
 import { useDictionary } from "../../lib/i18n/context";
 
-export default function SignInForm({ compact = false }) {
+export default function SignInForm({ compact = false, lang: langProp }) {
   const dict = useDictionary();
   const router = useRouter();
-  const { lang = "fr" } = useParams() ?? {};
+  const routeParams = useParams();
+  const lang =
+    typeof langProp === "string" && langProp
+      ? langProp
+      : routeParams?.lang ?? "fr";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
