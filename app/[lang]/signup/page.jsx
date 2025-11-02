@@ -21,7 +21,7 @@ export default function SignUpPage({ params }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  const { lang } = React.use(params);
+  const { lang } = params;
 
   function updateField(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }));

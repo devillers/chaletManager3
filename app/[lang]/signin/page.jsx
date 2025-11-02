@@ -14,7 +14,7 @@ export default function SignInPage({ params }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { lang } = React.use(params);
+  const { lang } = params;
 
   async function handleSubmit(event) {
     event.preventDefault();
