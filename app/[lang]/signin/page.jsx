@@ -4,7 +4,7 @@
 "use client";
 
 import { getSession, signIn } from "next-auth/react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Link from "next/link";
 import Alert from "../../../components/Alert";
@@ -14,7 +14,7 @@ import { useDictionary } from "../../../lib/i18n/context";
 export default function SignInPage() {
   const dict = useDictionary();
   const router = useRouter();
-  const { lang } = useParams(); // ✅ au lieu de props.params
+  const lang = dict?.locale ?? "en";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
