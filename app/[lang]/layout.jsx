@@ -9,7 +9,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const { lang } = await params;
+  const { lang } = params;
   const dictionary = getDictionary(lang);
   return {
     title: `Chalet Manager – ${dictionary.navigation.home}`,
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function LocaleLayout({ children, params }) {
-  const { lang } = await params;
+  const { lang } = params;
   const dictionary = getDictionary(lang);
   return (
     <DictionaryProvider value={dictionary}>

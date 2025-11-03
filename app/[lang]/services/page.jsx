@@ -1,4 +1,3 @@
-import React from "react";
 import { Section } from "../../../components/Section";
 import { getDictionary } from "../../../lib/i18n/dictionaries";
 
@@ -8,7 +7,7 @@ export const metadata = {
 };
 
 export default function ServicesPage({ params }) {
-  const { lang } = React.use(params);
+  const { lang } = params;
   const dict = getDictionary(lang);
   return (
     <div className="space-y-12">

@@ -1,11 +1,10 @@
-import React from "react";
 import { Section } from "../../components/Section";
 import { getDictionary } from "../../lib/i18n/dictionaries";
 
 export const revalidate = 3600;
 
 export default function HomePage({ params }) {
-  const { lang } = React.use(params);
+  const { lang } = params;
   const dict = getDictionary(lang);
   return (
     <div>
