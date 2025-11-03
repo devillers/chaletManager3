@@ -9,8 +9,13 @@ import { useDictionary } from "../lib/i18n/context";
 import { SUPPORTED_LANGUAGES } from "../lib/i18n/dictionaries";
 import { Pacifico } from "next/font/google";
 
-// ✅ Déclaration AU NIVEAU MODULE (obligatoire avec next/font)
-const pacifico = Pacifico({ subsets: ["latin"], weight: "400" });
+
+
+const pacifico = Pacifico({
+  subsets: ["latin"],
+  weight: "400",
+});
+
 
 function getSiblingLocalePath(pathname, lang) {
   const segments = pathname.split("/").filter(Boolean);
@@ -41,11 +46,16 @@ export default function Navbar({ lang }) {
     <header className="border-b border-neutral-200 bg-white/80 backdrop-blur supports-backdrop-filter:bg-white/60">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <div className="flex items-center space-x-2">
-          <Mountain className="h-12 w-12 text-amber-700" aria-hidden="true" />
-          <Link href={`/${lang}`} className={`${pacifico.className} text-lg font-light tracking-wide`}>
+
+          <Mountain className="h-8 w-8 text-amber-700" aria-hidden="true" />
+          <Link
+            href={`/${lang}`}
+            className={`${pacifico.className} text-lg font-light tracking-wide text-neutral-900`}
+          >
+
             Chalet Manager
           </Link>
-          
+
         </div>
 
         <button
@@ -58,10 +68,7 @@ export default function Navbar({ lang }) {
           }
           type="button"
         >
-          <span className="sr-only">
-            {open ? dict.navigation.closeMenu : dict.navigation.openMenu}
-          </span>
-          <span className="relative flex h-5 w-5 flex-col justify-between">
+          <span className="relative flex h-5 w-5 flex-col justify-between" aria-hidden="true">
             <motion.span
               className="block h-0.5 w-full rounded bg-neutral-900"
               animate={open ? "openTop" : "closed"}
