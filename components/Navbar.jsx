@@ -9,6 +9,9 @@ import { useDictionary } from "../lib/i18n/context";
 import { SUPPORTED_LANGUAGES } from "../lib/i18n/dictionaries";
 import { Pacifico } from "next/font/google";
 
+// ✅ Déclaration AU NIVEAU MODULE (obligatoire avec next/font)
+const pacifico = Pacifico({ subsets: ["latin"], weight: "400" });
+
 function getSiblingLocalePath(pathname, lang) {
   const segments = pathname.split("/").filter(Boolean);
   if (!segments.length) return `/${lang}`;
@@ -17,24 +20,16 @@ function getSiblingLocalePath(pathname, lang) {
 }
 
 const burgerLineVariants = {
-  closed: {
-    rotate: 0,
-    y: 0,
-  },
-  openTop: {
-    rotate: 45,
-    y: 6,
-  },
-  openBottom: {
-    rotate: -45,
-    y: -6,
-  },
+  closed: { rotate: 0, y: 0 },
+  openTop: { rotate: 45, y: 6 },
+  openBottom: { rotate: -45, y: -6 },
 };
 
 export default function Navbar({ lang }) {
   const dict = useDictionary();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
   const navLinks = [
     { href: `/${lang}`, label: dict.navigation.home },
     { href: `/${lang}/services`, label: dict.navigation.services },
@@ -47,7 +42,7 @@ export default function Navbar({ lang }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <div className="flex items-center space-x-2">
           <Mountain className="h-12 w-12 text-amber-700" aria-hidden="true" />
-          <Link href={`/${lang}`} className={$`{pacifico.className} text-lg font-light tracking-wide`}>
+          <Link href={`/${lang}`} className={`${pacifico.className} text-lg font-light tracking-wide`}>
             Chalet Manager
           </Link>
           

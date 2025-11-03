@@ -1,20 +1,25 @@
+//app/[lang]/signin/page.jsx
+
+
 "use client";
 
 import { getSession, signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import React, { useState } from "react";
+import Link from "next/link";
 import Alert from "../../../components/Alert";
 import { TextField } from "../../../components/FormField";
 import { useDictionary } from "../../../lib/i18n/context";
 
-export default function SignInPage({ params }) {
+export default function SignInPage() {
   const dict = useDictionary();
   const router = useRouter();
+  const { lang } = useParams(); // ✅ au lieu de props.params
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { lang } = params;
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -22,9 +27,8 @@ export default function SignInPage({ params }) {
     setLoading(true);
     try {
       const result = await signIn("credentials", { redirect: false, email, password });
-      if (result?.error) {
-        throw new Error(result.error);
-      }
+      if (result?.error) throw new Error(result.error);
+
       const session = await getSession();
       const role = session?.user?.role;
       const destination = role === "admin" ? "/admin" : role === "owner" ? "/owner" : "/tenant";
@@ -47,7 +51,7 @@ export default function SignInPage({ params }) {
           label={dict.auth.email}
           type="email"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <TextField
@@ -55,7 +59,7 @@ export default function SignInPage({ params }) {
           label={dict.auth.password}
           type="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <button
@@ -67,11 +71,10 @@ export default function SignInPage({ params }) {
         </button>
       </form>
       <p className="mt-6 text-sm text-neutral-600">
-        {dict.auth.needAccount}
-        {" "}
-        <a className="font-semibold text-neutral-900 hover:underline" href={`/${lang}/signup`}>
+        {dict.auth.needAccount}{" "}
+        <Link className="font-semibold text-neutral-900 hover:underline" href={`/${lang}/signup`}>
           {dict.navigation.signup}
-        </a>
+        </Link>
       </p>
     </div>
   );
