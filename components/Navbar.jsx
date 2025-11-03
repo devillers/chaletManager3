@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { Mountain } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDictionary } from "../lib/i18n/context";
 import { SUPPORTED_LANGUAGES } from "../lib/i18n/dictionaries";
+import { Pacifico } from "next/font/google";
 
 function getSiblingLocalePath(pathname, lang) {
   const segments = pathname.split("/").filter(Boolean);
@@ -43,18 +45,27 @@ export default function Navbar({ lang }) {
   return (
     <header className="border-b border-neutral-200 bg-white/80 backdrop-blur supports-backdrop-filter:bg-white/60">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href={`/${lang}`} className="text-lg font-semibold tracking-wide">
-          Chalet Manager
-        </Link>
+        <div className="flex items-center space-x-2">
+          <Mountain className="h-12 w-12 text-amber-700" aria-hidden="true" />
+          <Link href={`/${lang}`} className={$`{pacifico.className} text-lg font-light tracking-wide`}>
+            Chalet Manager
+          </Link>
+          
+        </div>
+
         <button
           className="relative flex h-10 w-10 items-center justify-center rounded-full border border-neutral-300 bg-white shadow-sm transition hover:border-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2 md:hidden"
           onClick={() => setOpen((prev) => !prev)}
           aria-expanded={open}
           aria-controls="main-navigation"
-          aria-label={open ? dict.navigation.closeMenu : dict.navigation.openMenu}
+          aria-label={
+            open ? dict.navigation.closeMenu : dict.navigation.openMenu
+          }
           type="button"
         >
-          <span className="sr-only">{open ? dict.navigation.closeMenu : dict.navigation.openMenu}</span>
+          <span className="sr-only">
+            {open ? dict.navigation.closeMenu : dict.navigation.openMenu}
+          </span>
           <span className="relative flex h-5 w-5 flex-col justify-between">
             <motion.span
               className="block h-0.5 w-full rounded bg-neutral-900"
@@ -75,10 +86,7 @@ export default function Navbar({ lang }) {
             />
           </span>
         </button>
-        <nav
-          id="main-navigation"
-          className="hidden items-center gap-6 md:flex"
-        >
+        <nav id="main-navigation" className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -166,7 +174,9 @@ export default function Navbar({ lang }) {
                     key={language}
                     href={getSiblingLocalePath(pathname, language)}
                     className={`text-xs font-semibold uppercase ${
-                      language === lang ? "text-neutral-900" : "text-neutral-500"
+                      language === lang
+                        ? "text-neutral-900"
+                        : "text-neutral-500"
                     }`}
                     onClick={() => setOpen(false)}
                   >

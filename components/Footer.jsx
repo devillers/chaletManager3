@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 import { Pacifico } from "next/font/google";
 import { useDictionary } from "../lib/i18n/context";
 
-import { GiMountains } from "react-icons/gi";
+
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import {
   FaFacebookF,
