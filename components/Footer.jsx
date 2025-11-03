@@ -101,7 +101,7 @@ export default function Footer() {
             <div className="space-y-3 text-neutral-400">
               {contact.email && (
                 <div className="flex items-center space-x-3">
-                  <FiMail className="text-amber-700 shrink-0 text-xs font-thin " />
+                  <FiMail className="text-amber-700 shrink-0 text-md font-thin " />
                   <a
                     href={`mailto:${contact.email}`}
                     className="hover:text-white transition text-xs font-thin"
@@ -139,7 +139,7 @@ export default function Footer() {
 
           {/* Colonne 2 - Services */}
           <div>
-            <h3 className="text-white uppercase tracking-wide text-sm mb-6">
+            <h3 className="text-white uppercase tracking-wide text-sm mb-6 font-thin">
               {navigation.services?.title}
             </h3>
             <ul className="space-y-3">
@@ -158,7 +158,7 @@ export default function Footer() {
 
           {/* Colonne 3 - Entreprise */}
           <div>
-            <h3 className="text-white uppercase tracking-wide text-sm mb-6">
+            <h3 className="text-white uppercase tracking-wide font-thin text-sm mb-6">
               {navigation.company?.title}
             </h3>
             <ul className="space-y-3">
@@ -177,7 +177,7 @@ export default function Footer() {
 
           {/* Colonne 4 - Newsletter */}
           <div>
-            <h3 className="text-white uppercase tracking-wide text-sm mb-6">
+            <h3 className="text-white uppercase tracking-wide font-thin text-sm mb-6">
               {newsletter.title}
             </h3>
             {newsletter.description && (
