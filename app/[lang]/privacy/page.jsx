@@ -1,4 +1,3 @@
-import React from "react";
 import { getDictionary } from "../../../lib/i18n/dictionaries";
 
 export const metadata = {
@@ -6,7 +5,7 @@ export const metadata = {
 };
 
 export default function PrivacyPage({ params }) {
-  const { lang } = React.use(params);
+  const { lang } = params;
   const dict = getDictionary(lang);
   return (
     <div className="mx-auto max-w-4xl px-4 py-16">
