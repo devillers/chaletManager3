@@ -41,7 +41,7 @@ export default function Navbar({ lang }) {
   ];
 
   return (
-    <header className="border-b border-neutral-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header className="border-b border-neutral-200 bg-white/80 backdrop-blur supports-backdrop-filter:bg-white/60">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <Link href={`/${lang}`} className="text-lg font-semibold tracking-wide">
           Chalet Manager
