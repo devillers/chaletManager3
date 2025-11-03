@@ -25,8 +25,9 @@ export async function generateMetadata({ params }) {
 export default async function LocaleLayout({ children, params }) {
   const { lang } = params;
   const dictionary = getDictionary(lang);
+  const dictionaryWithLocale = { ...dictionary, locale: lang };
   return (
-    <DictionaryProvider value={dictionary}>
+    <DictionaryProvider value={dictionaryWithLocale}>
       <div className="flex min-h-screen flex-col bg-white">
         <ServiceWorkerRegister />
         <Navbar lang={lang} />
